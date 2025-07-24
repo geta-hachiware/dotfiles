@@ -37,11 +37,11 @@
       };
       homeConfigurations = {
         hachi = home-manager.lib.homeManagerConfiguration {
-          inherit system pkgs;
+          inherit pkgs;
+          modules = [
+          ./home-manager/home.nix
+          ];
         };
-        modules = [
-        ./home-manager/home.nix
-        ];
       };
     };
 }
