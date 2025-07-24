@@ -2,15 +2,12 @@
   description = "hachi system flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixos-25.05";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    hm-unstable = {
-      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -19,37 +16,32 @@
     {
       self,
       nixpkgs,
-      nixpkgs-stable,
       home-manager,
-      hm-unstable,
       ...
       }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-      pkgs-stable = import nixpkgs-stable {
+      pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
       };
+      lib = nixpkgs.lib;
     in {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs system pkgs-stable;
+      nixosConfigurations = {
+        nixos = lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./nixos/configuration.nix
+          ];
+        };
       };
-      modules = [
-        ./nixos/configuration.nix
-      ];
-    };
-    homeConfigurations = {
-      hachi = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = {
-          inherit inputs system pkgs-stable;
+      homeConfigurations = {
+        hachi = home-manager.lib.homeManagerConfiguration {
+          inherit system pkgs;
         };
         modules = [
-          ./home-manager/home.nix
+        ./home-manager/home.nix
         ];
       };
     };
-  };
 }
