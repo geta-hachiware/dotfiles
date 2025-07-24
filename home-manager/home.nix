@@ -41,7 +41,13 @@
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
-  home.file = {};
+  home.file = {
+     ".config/hypr/Scripts/WallPaper.zsh".executable = true;
+     ".config/hypr/WallPaper" = {
+       source = ./Wallpaper;
+       recursive = true;
+     };
+  };
 
   home.sessionVariables = {
     # EDITOR = "emacs";
