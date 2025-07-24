@@ -42,17 +42,6 @@
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
-    ".config/rofi/colors.rasi".source = ./Dots/rofi/colors.rasi;
-    ".config/rofi/config.rasi".source = ./Dots/rofi/config.rasi;
-    ".config/rofi/fonts.rasi".source = ./Dots/rofi/fonts.rasi;
-    ".config/rofi/menu.rasi".source = ./Dots/rofi/menu.rasi;
-    ".config/rofi/powermenu.sh".source = ./Dots/rofi/powermenu.sh;
-    ".config/rofi/powermenu.rasi".source = ./Dots/rofi/powermenu.rasi;
-    ".config/hypr/Scripts/WallPaper.zsh".executable = true;
-    ".config/hypr/WallPaper" = {
-      source = ./Wallpaper;
-      recursive = true;
-    };
   };
 
   home.sessionVariables = {

@@ -1,7 +1,6 @@
 {
   imports = [
     ./cursor.nix
-    ./rofi.nix
     ./mako.nix
     ./git.nix
 
