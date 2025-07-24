@@ -7,7 +7,7 @@
     ./git.nix
 
     ./hyprland/default.nix
-    ./hyprland/hyrlock/default.nix
+    ./hyprland/hyprlock/default.nix
     ./hyprland/hypridle/default.nix
     ./waybar/default.nix
 
