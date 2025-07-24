@@ -29,13 +29,11 @@
     cava
     hyprshot
     brightnessctl
-    hyprlock
     wl-clipboard
     pulseaudio
     feh
     libreoffice-qt6-fresh
     imagemagick
-    hypridle
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

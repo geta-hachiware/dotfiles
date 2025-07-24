@@ -21,7 +21,6 @@ in
       exec-once = [
         "~/.config/hypr/start.sh"
         "waybar"
-	"hypridle"
       ];
 
       #Env

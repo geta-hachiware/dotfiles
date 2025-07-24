@@ -10,6 +10,13 @@
       url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    stylix = {
+      url = "github:nix-community/stylix";
+    };
+
+      # Textfox
+    textfox.url = "github:adriankarlen/textfox";
   };
 
   outputs =
@@ -17,6 +24,7 @@
       self,
       nixpkgs,
       home-manager,
+      stylix,
       ...
       }@inputs:
     let
@@ -32,6 +40,7 @@
           inherit system;
           modules = [
             ./nixos/configuration.nix
+            stylix.nixosModules.stylix
           ];
         };
       };
