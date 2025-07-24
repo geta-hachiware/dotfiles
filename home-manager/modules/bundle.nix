@@ -3,7 +3,7 @@
     ./cursor.nix
     ./rofi.nix
     ./mako.nix
-    ./kitty.nix
+    ./ghostty
     ./git.nix
 
     ./hyprland/default.nix

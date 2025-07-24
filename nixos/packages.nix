@@ -8,7 +8,6 @@
 
   environment.systemPackages = with pkgs; [
     # Desktop apps
-    ghostty
     obs-studio
     discord
     kdePackages.kate

@@ -1,194 +1,218 @@
-{ config, pkgs, ... }:
-
 {
-  imports = [
-    ./style.nix
-  ];
+  stylix.targets.waybar.enable = false;
 
   programs.waybar = {
     enable = true;
-
-    settings = [
-      {
-        #Bar
+    settings = {
+      waybar = {
         layer = "top";
         position = "top";
-        modules-left = ["custom/launcher" "hyprland/workspaces"];
-        modules-center = ["hyprland/window"];
-        modules-right = ["cpu" "memory" "disk" "keyboard-state" "custom/wallpaper" "custom/automatico" "tray" "cava" "backlight" "pulseaudio" "battery" "clock" "custom/power"];
+        height = 30;
+        spacing = 4;
+        margin-left = 14;
+        margin-right = 14;
+        margin-top = 2;
+        modules-left = [
+          "custom/nixos"
+          "niri/workspaces"
+          "niri/window"
+        ];
+        modules-right = [
+          "pulseaudio"
+          "network"
+          "cpu"
+          "memory"
+          "temperature"
+          "battery"
+          "clock"
+        ];
 
-        #Modules
-        pulseaudio = {
-          tooltip = false;
-          scroll-step = 5;
-          format = "{icon}  {volume}%";
-          format-muted = "muted";
-          on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
+        "custom/nixos" = {
+          format = "";
+          tooltip = true;
+          tooltip-format = "btw";
+        };
+
+        "niri/workspaces" = {
+          format = "{icon}";
           format-icons = {
-            default = ["" "" ""];
+            "browser" = "";
+            "chat" = "<b></b>";
+
+            "default" = "";
           };
         };
-        "hyprland/window" = {
-          max-length = 100;
-          separate-outputs = true;
+
+        "niri/window" = {
           format = "{}";
-          rewrite = {
-            "(.*) — Mozilla Firefox" = "$1";
+          icon = true;
+          max-length = 24;
+        };
+
+        pulseaudio = {
+          format = "{icon} {volume}%";
+          format-bluetooth = "{icon} {volume}%  {format_source}";
+          format-bluetooth-muted = "{icon} {format_source}";
+          format-muted = " {format_source}";
+          format-source = " {volume}%";
+          format-source-muted = "";
+          format-icons = {
+            headphone = "";
+            phone = "";
+            portable = "";
+            car = "";
+            default = [
+              ""
+              ""
+              ""
+            ];
           };
+          on-click = "pavucontrol";
         };
-        "custom/wallpaper" = {
-          format = "  ";
-          on-click = "sh -c '$HOME/.config/hypr/Scripts/WallPaper.zsh'";
+
+        network = {
+          format-wifi = "󰖩 {essid}";
+          format-ethernet = "{ipaddr}/{cidr}";
+          tooltip-format = "{ifname} via {gwaddr}";
+          format-linked = "{ifname} (No IP)";
+          format-disconnected = "Disconnected ⚠";
+          # on-click = "sh ~/scripts/rofi-wifi-menu/rofi-wifi-menu.sh";
         };
-        "custom/automatico" = {
-          exec = "sh -c '$HOME/.config/hypr/Scripts/WallPaper.zsh'";
-          interval = 600;
+
+        cpu = {
+          format = " {usage}%";
+          tooltip = true;
         };
-        cava = {
-          framerate = 240;
-          autosens = 1;
-          sensitivity = 5;
-          bars = 6;
-          lower_cutoff_freq = 20;
-          higher_cutoff_freq = 22000;
-          method = "pulse";
-          source = "auto";
-          stereo = false;
-          reverse = false;
-          bar_delimiter = 0;
-          monstercat = true;
-          waves = true;
-          noise_reduction = 0.77;
-          input_delay = 0;
-          format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+
+        memory = {
+          format = " {}%";
+          tooltip = true;
         };
-        "custom/keybinds" = {
-          format = "{icon} KB";
-          format-icons = ["󰘳"];
-          on-click = "bash ~/Documents/themes/keybinds/keybinds.sh";
+
+        temperature = {
+          interval = 10;
+          critical-threshold = 100;
+          format-critical = " {temperatureC}";
+          format = " {temperatureC}°C";
         };
-        backlight = {
-          device = "intel_backlight";
-          format = "{icon}  {percent}%";
-          format-icons = ["" ""];
-        };
+
         battery = {
-          bat = "BAT0";
-          interval = 60;
           states = {
             warning = 30;
             critical = 15;
           };
-          format = "{icon}  {capacity}%";
-          format-icons = ["" "" "" "" ""];
-          max-length = 25;
-        };
-        keyboard-state = {
-          numlock = false;
-          capslock = true;
-          format = "{icon} {name}";
-          format-icons = {
-            locked = "";
-            unlocked = "";
-          };
-        };
-        tray = {
-          icon-size = 18;
-          spacing = 10;
-        };
-        disk = {
-          interval = 30;
-          format = "  {percentage_used}%";
-          path = "/";
-        };
-        privacy = {
-          icon-spacing = 10;
-          icon-size = 18;
-          transition-duration = 250;
-          tooltip = false;
-          modules = [
-            {
-              type = "screenshare";
-              tooltip = true;
-              tooltip-icon-size = 24;
-            }
-            {
-              type = "audio-out";
-              tooltip = true;
-              tooltip-icon-size = 24;
-            }
-            {
-              type = "audio-in";
-              tooltip = true;
-              tooltip-icon-size = 24;
-            }
+          format = "{icon} {capacity}%";
+          format-full = "{icon} {capacity}%";
+          format-charging = " {capacity}%";
+          format-plugged = " {capacity}%";
+          format-alt = "{time} {icon}";
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
           ];
         };
-        "hyprland/language" = {
-          format = "  {1}";
-          tooltip = false;
-        };
-        cpu = {
-          interval = 15;
-          format = "  {}%";
-          max-length = 10;
-        };
-        memory = {
-          interval = 30;
-          format = "  {}%";
-          max-length = 10;
-        };
-        "custom/launcher" = {
-          format = " ";
-          on-click = "rofi -show drun";
-          on-click-right = "killall rofi";
-          tooltip = false;
-        };
-        "custom/power" = {
-          format = "⏻ ";
-          tooltip = false;
-          on-click = "bash ~/.config/rofi/powermenu.sh";
-          on-click-right = "killall rofi";
-        };
+
         clock = {
           format = "{:%H:%M}";
-	        format-alt = "{:%d/%m/%Y}";
-	        tooltip-format = "<tt><small>{calendar}</small></tt>";
-          calendar = {
-            mode = "year";
-            mode-mon-col = 3;
-            weeks-pos = "right";
-            on-scroll = 1;
-            format = {
-              months = "<span color='#ffead3'><b>{}</b></span>";
-              days = "<span color='#ecc6d9'><b>{}</b></span>";
-              weeks = "<span color='#99ffdd'><b>W{}</b></span>";
-              weekdays = "<span color='#ffcc66'><b>{}</b></span>";
-              today = "<span color='#ff6699'><b><u>{}</u></b></span>";
-            };
-          };
-          actions = {
-            on-click-right = "mode";
-            on-scroll-up = "shift_up";
-            on-scroll-down = "shift_down";
-          };
+          tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+          format-alt = "{:%Y-%m-%d}";
         };
-        "hyprland/workspaces" = {
-          format = "{icon}";
-          tooltip = false;
-          format-icons = {
-            "1" = " 󰞷 ";
-            "2" = "  ";
-            "3" = "  ";
-            "4" = " 󰍹 ";
-            "5" = " 󰍹 ";
-          };
-          on-click = "activate";
-          persistent-workspaces = {
-            "*" = 3;
-          };
-        };
+      };
+    };
+
+    style = ''
+      * {
+        font-family: "FiraCode Nerd Font Mono";
+        font-weight: bold;
+        font-size: 14px;
       }
-    ];
+
+      window#waybar {
+        background: none;
+        border: none;
+      }
+
+      #workspaces {
+        margin-left: 8px;
+      }
+
+      #workspaces button {
+        padding: 0 3px;
+        box-shadow: none;
+        background-color: transparent;
+      }
+
+
+      #workspaces button.focused {
+        box-shadow: none;
+        color: #f6c177;
+        font-weight: 900;
+      }
+
+      .modules-left,
+      .modules-right {
+        border: 2.5px solid rgba(196, 167, 231, 0.2);
+        border-radius: 12px;
+        margin: 4px 20px;
+        padding: 2px 5px;
+        background: rgba(57, 53, 82, 0.75);
+      }
+
+      .modules-center {
+        border: none;
+        background: none;
+      }
+
+      #custom-nixos {
+        font-size: 18px;
+        padding-left: 10px;
+      }
+
+      #clock,
+      #battery,
+      #cpu,
+      #memory,
+      #disk,
+      #temperature,
+      #backlight,
+      #network,
+      #pulseaudio,
+      #wireplumber,
+      #custom-media,
+      #tray,
+      #mode,
+      #idle_inhibitor,
+      #scratchpad,
+      #power-profiles-daemon,
+      #language,
+      #mpd {
+        padding: 0 10px;
+        border-radius: 15px;
+      }
+
+      #clock:hover,
+      #battery:hover,
+      #cpu:hover,
+      #memory:hover,
+      #disk:hover,
+      #temperature:hover,
+      #backlight:hover,
+      #network:hover,
+      #pulseaudio:hover,
+      #wireplumber:hover,
+      #custom-media:hover,
+      #tray:hover,
+      #mode:hover,
+      #idle_inhibitor:hover,
+      #scratchpad:hover,
+      #power-profiles-daemon:hover,
+      #language:hover,
+      #mpd:hover {
+        background: rgba(26, 27, 38, 0.9);
+      }
+    '';
   };
 }
