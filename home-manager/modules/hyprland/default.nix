@@ -1,7 +1,9 @@
+{ config, pkgs, ... }:
+
 let
   terminal = "ghostty";
   filemanager = "dolphin";
-  menu = "rofi -show drun ";
+  menu = "rofi -show drun -show-icons";
 in  
 {
   wayland.windowManager.hyprland = {
@@ -17,6 +19,8 @@ in
 
       #Start
       exec-once = [
+        "${config.home.homeDirectory}/.config/hypr/Scripts/Wallpaper.zsh"
+        #"~/.config/hypr/start.sh"
         "waybar"
 	"hypridle"
       ];
