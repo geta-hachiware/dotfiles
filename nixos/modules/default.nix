@@ -10,5 +10,6 @@
     ./programs/discord.nix
     ./programs/steam.nix
     ./config/locale.nix
+    ./fonts.nix
   ];
 }
