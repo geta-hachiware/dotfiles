@@ -1,31 +1,28 @@
 let
-  terminal = "kitty";
+  terminal = "ghostty";
   filemanager = "dolphin";
   menu = "rofi -show drun ";
-in
+in  
 {
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
+      "$mainMod" = "SUPER";
       
-      # Monitor
+      #Monitor
       monitor = [ 
       "DP-1,1920x1080@144,0x0,1"
       ];
 
-      # Auto start
+      #Start
       exec-once = [
         "waybar"
       ];
 
-      # Env
+      #Env
       env = [
-        "XCURSOR_SIZE = 15"
-        "HYPRCURSOR_SIZE = 15"
-        "XDG_SESSION_TYPE = wayland"
-        "XDG_CURRENT_DESKTOP = Hyprland"
-        "QT_QPA_PLATFORM = wayland"
-        "MOZ_ENABLE_WAYLAND = 1"
+        "XCURSOR_SIZE,15"
+        "HYPRCURSOR_SIZE,15"
       ];
 
       #Look and Feel
@@ -111,7 +108,7 @@ in
         ];
       };
 
-      #Layout
+      # Layout
       dwindle = {
 
         pseudotile = true;
@@ -126,7 +123,7 @@ in
         disable_hyprland_logo = false;
       };
 
-      # Keyboard
+      #Input
       input = {
 
         #Keyboard
@@ -161,79 +158,64 @@ in
       };
 
       #Binds
-      "$mainMod" = "SUPER";
-
       bind = [
-        # Window/Session actions
         "$mainMod, Return, exec, ${terminal}"
         "$mainMod, Q, killactive"
         "$mainMod, M, exit"
-        "$mainMod, E, exec, ${filemanager}"
-        "$mainMod, V, togglefloating"
-        "$mainMod, D, exec, ${menu}"
-        "$mainMod, P, pseudo"
-        "$mainMod, J, togglesplit"
-        "$mainMod, F, fullscreen"
-
-        #ScreenShot
-        "$mainMod, S, exec, hyprshot -m region"
-        "$mainMod SHIFT, S, exec, hyprshot -m region"
-
-        #Scroll workspaces
-        "$mainMod, mouse_down, workspace, e+1"
-        "$mainMod, mouse_up, workspace, e-1"
+        "SUPER, E, exec, ${filemanager}"
+        "SUPER, V, togglefloating"
+        "SUPER, D, exec, ${menu}"
+        "SUPER, P, pseudo"
+        "SUPER, J, togglesplit"
+        "SUPER, F, fullscreen"
 
         # Move focus with mainMod + arrow keys
-        "$mainMod, left, movefocus, l"
-        "$mainMod, right, movefocus, r"
-        "$mainMod, up, movefocus, u"
-        "$mainMod, down, movefocus, d"
+        "SUPER, left, movefocus, l"
+        "SUPER, right, movefocus, r"
+        "SUPER, up, movefocus, u"
+        "SUPER, down, movefocus, d"
 
-        # Switch workspaces
-        "$mainMod, 1, workspace, 1"
-        "$mainMod, 2, workspace, 2"
-        "$mainMod, 3, workspace, 3"
-        "$mainMod, 4, workspace, 4"
-        "$mainMod, 5, workspace, 5"
-        "$mainMod, 6, workspace, 6"
-        "$mainMod, 7, workspace, 7"
-        "$mainMod, 8, workspace, 8"
-        "$mainMod, 9, workspace, 9"
-        "$mainMod, 0, workspace, 10"
+        #workspaces
+        "SUPER, 1, workspace, 1"
+        "SUPER, 2, workspace, 2"
+        "SUPER, 3, workspace, 3"
+        "SUPER, 4, workspace, 4"
+        "SUPER, 5, workspace, 5"
+        "SUPER, 6, workspace, 6"
+        "SUPER, 7, workspace, 7"
+        "SUPER, 8, workspace, 8"
+        "SUPER, 9, workspace, 9"
+        "SUPER, 0, workspace, 10"
 
-        # Move focused window to a workspace silently
-        "$mainMod+Alt, 1, movetoworkspacesilent, 1"
-        "$mainMod+Alt, 2, movetoworkspacesilent, 2"
-        "$mainMod+Alt, 3, movetoworkspacesilent, 3"
-        "$mainMod+Alt, 4, movetoworkspacesilent, 4"
-        "$mainMod+Alt, 5, movetoworkspacesilent, 5"
-        "$mainMod+Alt, 6, movetoworkspacesilent, 6"
-        "$mainMod+Alt, 7, movetoworkspacesilent, 7"
-        "$mainMod+Alt, 8, movetoworkspacesilent, 8"
-        "$mainMod+Alt, 9, movetoworkspacesilent, 9"
-        "$mainMod+Alt, 0, movetoworkspacesilent, 10"
+        #MoveWindows
+        "SUPER SHIFT, 1, movetoworkspace, 1"
+        "SUPER SHIFT, 2, movetoworkspace, 2"
+        "SUPER SHIFT, 3, movetoworkspace, 3"
+        "SUPER SHIFT, 4, movetoworkspace, 4"
+        "SUPER SHIFT, 5, movetoworkspace, 5"
+        "SUPER SHIFT, 6, movetoworkspace, 6"
+        "SUPER SHIFT, 7, movetoworkspace, 7"
+        "SUPER SHIFT, 8, movetoworkspace, 8"
+        "SUPER SHIFT, 9, movetoworkspace, 9"
+        "SUPER SHIFT, 0, movetoworkspace, 10"
 
-        # Move focused window to a workspace
-        "$mainMod SHIFT, 1, movetoworkspace, 1"
-        "$mainMod SHIFT, 2, movetoworkspace, 2"
-        "$mainMod SHIFT, 3, movetoworkspace, 3"
-        "$mainMod SHIFT, 4, movetoworkspace, 4"
-        "$mainMod SHIFT, 5, movetoworkspace, 5"
-        "$mainMod SHIFT, 6, movetoworkspace, 6"
-        "$mainMod SHIFT, 7, movetoworkspace, 7"
-        "$mainMod SHIFT, 8, movetoworkspace, 8"
-        "$mainMod SHIFT, 9, movetoworkspace, 9"
-        "$mainMod SHIFT, 0, movetoworkspace, 10"
+        #ScreenShot
+        "SUPER, S, exec, hyprshot -m region"
+        "SUPER SHIFT, S, exec, hyprshot -m region"
+
+        #Scroll workspaces
+        "SUPER, mouse_down, workspace, e+1"
+        "SUPER, mouse_up, workspace, e-1"
       ];
 
-      # MouseBind
+      #MouseBind
       bindm = [
         #Rezise
-        "$mainMod, mouse:272, movewindow"
-        "$mainMod, mouse:273, resizewindow"
+        "SUPER, mouse:272, movewindow"
+        "SUPER, mouse:273, resizewindow"
       ];
 
-      # SpecialKey
+      #EspecialKey
       bindel = [
         ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
         ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"

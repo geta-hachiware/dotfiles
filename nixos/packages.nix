@@ -8,7 +8,6 @@
 
   environment.systemPackages = with pkgs; [
     # Desktop apps
-    neovim
     ghostty
     obs-studio
     discord
@@ -24,36 +23,17 @@
     heroic
 
     # CLI utils
-    neofetch
-    tree
-    tree
     wget
     git
     vim
     fastfetch
-    htop
-    cava
-    ranger
 
     # GUI utils
     mako
-
-    # Wayland stuff
-    wl-clipboard
-    hyprlock
-    hypridle
-
-    # WMs and stuff
-    waybar
-    swww
-    brightnessctl
 
     # Sound
     pipewire
     pulseaudio
     pamixer
-
-    # Screenshotting
-    hyprshot
   ];
 }

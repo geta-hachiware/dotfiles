@@ -19,7 +19,25 @@
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
-  home.packages = [];
+  home.packages = with pkgs; [
+    neovim
+    btop
+    swww
+    waybar
+    rofi-wayland
+    fastfetch
+    cava
+    hyprshot
+    brightnessctl
+    hyprlock
+    wl-clipboard
+    pulseaudio
+    feh
+    spotify
+    libreoffice-qt6-fresh
+    imagemagick
+    hypridle
+  ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
