@@ -19,8 +19,7 @@ in
 
       #Start
       exec-once = [
-        "${config.home.homeDirectory}/.config/hypr/Scripts/Wallpaper.zsh"
-        #"~/.config/hypr/start.sh"
+        "~/.config/hypr/start.sh"
         "waybar"
 	"hypridle"
       ];
