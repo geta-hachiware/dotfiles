@@ -2,7 +2,7 @@ let
   terminal = "kitty";
   filemanager = "dolphin";
   menu = "rofi -show drun ";
-in  
+in
 {
   wayland.windowManager.hyprland = {
     enable = true;

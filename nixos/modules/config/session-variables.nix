@@ -4,7 +4,7 @@
   environment.sessionVariables = {
     EDITOR = "nvim";
     VISUAL = "nvim";
-    TERM = "xterm-kitty";
+    TERM = "kitty";
     RANGER_LOAD_DEFAULT_RC = "FALSE";
     WLR_NO_HARDWARE_CURSORS = "1";
   };
