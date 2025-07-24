@@ -17,7 +17,6 @@ in
 
       #Start
       exec-once = [
-        "${config.home.homeDirectory}/.config/hypr/Scripts/Wallpaper.zsh"
         "waybar"
 	"hypridle"
       ];

@@ -2,7 +2,7 @@
 
 
 # Current Theme
-dir="$HOME/~/hachi/home-manager/modules/rofi"
+dir="$HOME/.config/rofi"
 theme='powermenu'
 
 # CMDs
