@@ -15,6 +15,10 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    #nixcord = {
+      #url = "github:kaylorben/nixcord";
+    #};
   };
 
   outputs =
@@ -23,6 +27,7 @@
       nixpkgs,
       home-manager,
       spicetify-nix,
+      #nixcord,
       ...
       }@inputs:
     let
@@ -38,7 +43,6 @@
           inherit system;
           modules = [
             ./nixos/configuration.nix
-            inputs.spicetify-nix.nixosModules.default
           ];
         };
       };
