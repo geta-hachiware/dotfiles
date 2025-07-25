@@ -1,9 +1,11 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
     ./zsh.nix
     ./modules/bundle.nix
+    inputs.nixcord.homeModules.nixcord
+    inputs.spicetify-nix.homeManagerModules.spicetify
   ];
   home = {
     username = "hachi";
@@ -36,7 +38,6 @@
     imagemagick
     xdg-desktop-portal
     xdg-desktop-portal-wlr
-    spotify
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

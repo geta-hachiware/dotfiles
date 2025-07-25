@@ -1,8 +1,9 @@
 { pkgs, inputs, ... }:
-let
-  # system = "x86_64-linux";
-  home.packages = [ inputs.nixcord.packages.${pkgs.system}.default; ];
-in {
+
+  let
+    home.packages = [ inputs.nixcord.packages.${pkgs.system}.default ];
+  in {
+
   programs.nixcord = {
     enable = true;
     # vesktop = { enable = true; };

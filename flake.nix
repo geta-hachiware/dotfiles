@@ -16,9 +16,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    #nixcord = {
-      #url = "github:kaylorben/nixcord";
-    #};
+    nixcord = {
+      url = "github:kaylorben/nixcord";
+    };
   };
 
   outputs =
@@ -27,7 +27,7 @@
       nixpkgs,
       home-manager,
       spicetify-nix,
-      #nixcord,
+      nixcord,
       ...
       }@inputs:
     let
