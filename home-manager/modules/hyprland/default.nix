@@ -55,10 +55,41 @@ in
         "col.inactive_border" = "rgba(393552dd)";
 
         resize_on_border = true;
+	layout = "dwindle";
 
-        allow_tearing = true;
-        layout = "dwindle";
+	allow_tearing = false;
+
+	snap = {
+	  enabled = true;
+	  window_gap = 10;
+	  monitor_gap = 10;
+	  border_overlap = false;
+	};
       };
+
+      #Input
+      input = {
+
+        #Keyboard
+        kb_layout = "us";
+        kb_variant = "";
+        kb_model = "";
+        kb_options = "";
+        kb_rules = "";
+        
+        #Numlock
+        numlock_by_default = true;  
+        
+        #Mouse
+        follow_mouse = 1;
+        sensitivity = 0;
+
+        #Touchpad
+        touchpad = {
+          natural_scroll = false;
+        };
+      };
+
 
       #decoration
       decoration = {
@@ -89,9 +120,13 @@ in
 
         blur = {
           enabled = true;
+	  xray = true;
           size = 4;
-          passes = 2;
-          vibrancy = 0.4;
+          passes = 3;
+          vibrancy = 0.1696;
+	  new_optimizations = true;
+	  popups = true;
+	  popups_ignorealpha = 0.6;
         };
       };
 
@@ -127,43 +162,29 @@ in
         ];
       };
 
-      # Layout
+      # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
       dwindle = {
-
         pseudotile = true;
         preserve_split = true;
       };
-      master = {
 
+      # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
+      master = {
         new_status = "master";
       };
+
+      render = {
+        explicit_sync = 2;
+        explicit_sync_kms = 2;
+        direct_scanout = true;
+      };
+
       misc = {
         force_default_wallpaper = -1;
         disable_hyprland_logo = false;
       };
 
-      #Input
-      input = {
 
-        #Keyboard
-        kb_layout = "us";
-        kb_variant = "";
-        kb_model = "";
-        kb_options = "";
-        kb_rules = "";
-        
-        #Numlock
-        numlock_by_default = true;  
-        
-        #Mouse
-        follow_mouse = 1;
-        sensitivity = 0;
-
-        #Touchpad
-        touchpad = {
-          natural_scroll = false;
-        };
-      };
 
       #Gestos
       gestures = {
