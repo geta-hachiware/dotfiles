@@ -38,6 +38,7 @@
     xdg-desktop-portal-wlr
     nerd-fonts.fira-code
     protonup-qt
+    rofi-wayland
   ];
 
   fonts.fontconfig.enable = true;

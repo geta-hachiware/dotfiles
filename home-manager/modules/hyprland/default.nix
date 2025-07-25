@@ -196,7 +196,7 @@
         "$mainMod, M, exit"
         "SUPER, E, exec, dolphin"
         "SUPER, V, togglefloating"
-        "SUPER, D, exec, rofi -dmenu -show-icons"
+        "SUPER, D, exec, rofi -show drun -show-icons"
         "SUPER, P, pseudo"
         "SUPER, J, togglesplit"
         "SUPER, F, fullscreen"
