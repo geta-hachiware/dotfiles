@@ -14,7 +14,7 @@
 
       #Start
       exec-once = [
-        "${config.home.homeDirectory}/.config/hypr/start.sh"
+        "~/.config/hypr/start.sh"
         "waybar"
       ];
 
@@ -196,7 +196,7 @@
         "$mainMod, M, exit"
         "SUPER, E, exec, dolphin"
         "SUPER, V, togglefloating"
-        "SUPER, D, exec, rofi -dmenu -show-icons | cliphist list | cliphist decode | wl-copy"
+        "SUPER, D, exec, rofi -dmenu -show-icons"
         "SUPER, P, pseudo"
         "SUPER, J, togglesplit"
         "SUPER, F, fullscreen"

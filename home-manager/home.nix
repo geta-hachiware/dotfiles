@@ -26,7 +26,6 @@
     btop
     swww
     waybar
-    rofi-wayland
     fastfetch
     cava
     hyprshot
