@@ -34,6 +34,8 @@
     feh
     libreoffice-qt6-fresh
     imagemagick
+    xdg-desktop-portal
+    xdg-desktop-portal-wlr
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

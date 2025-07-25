@@ -51,8 +51,8 @@ in
         border_size = 2;
 
         #Bordes Eva-01 style
-        "col.active_border" = "rgba(965fd4ff) rgba(8bd450ff) 45deg";
-        "col.inactive_border" = "rgba(3f6d4eee)";
+        "col.active_border" = "rgba(c4a7e7ff) rgba(f6c177ff) 45deg";
+        "col.inactive_border" = "rgba(393552dd)";
 
         resize_on_border = true;
 
@@ -84,14 +84,14 @@ in
           enabled = true;
           range = 9;
           render_power = 4;
-          color = "rgba(734f9aff)";
+          color = "rgba(393552dd)";
         };
 
         blur = {
           enabled = true;
           size = 4;
           passes = 2;
-          vibrancy = 0.6;
+          vibrancy = 0.4;
         };
       };
 

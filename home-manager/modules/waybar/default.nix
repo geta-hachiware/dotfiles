@@ -1,49 +1,55 @@
-{ config, pkgs, ... }:
-
 {
-  imports = [
-    ./style.nix
-  ];
-
   programs.waybar = {
     enable = true;
-
-    settings = [
-      {
-        #Bar
+    settings = {
+      waybar = {
         layer = "top";
         position = "top";
-        modules-left = ["custom/launcher" "hyprland/workspaces"];
-        modules-center = ["hyprland/window"];
-        modules-right = ["cpu" "memory" "disk" "keyboard-state" "custom/wallpaper" "custom/automatico" "tray" "cava" "backlight" "pulseaudio" "battery" "clock" "custom/power"];
+        modules-left = [ "custom/nixos" "hyprland/workspaces" ];
+        modules-center = [ "hyprland/window" ];
+        modules-right = [
+	      "cava"
+	      "pulseaudio"
+	      "network"
+              "cpu"
+	      "memory"
+	      "disk"
+	      "temperature"
+	      "battery"
+	      "clock"
+	      "tray"
+        ];
 
-        #Modules
-        pulseaudio = {
+        # NixOS logo
+        "custom/nixos" = {
+          format = "";
+          tooltip = true;
+          tooltip-format = "btw";
+        };
+
+        # Workspace
+        "hyprland/workspaces" = {
+          on-click = "activate";
+          format = "{icon}";
           tooltip = false;
-          scroll-step = 5;
-          format = "{icon}  {volume}%";
-          format-muted = "muted";
-          on-click = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
-          format-icons = {
-            default = ["" "" ""];
-          };
+	  show-empty = false;
+
+	  format-icons = {
+	    active = "●";
+            visible = "●"; # visible but not focused ( e.g on other monitor )
+	    default = "○"; # has windows, not active
+	    empty = ""; # don't show at allvi
+	  };
         };
+
+        # Centered
         "hyprland/window" = {
-          max-length = 100;
-          separate-outputs = true;
           format = "{}";
-          rewrite = {
-            "(.*) — Mozilla Firefox" = "$1";
-          };
+	      max-length = 80;
+	      separate-outputs = true;
         };
-        "custom/wallpaper" = {
-          format = "  ";
-          on-click = "sh -c '$HOME/.config/hypr/Scripts/WallPaper.zsh'";
-        };
-        "custom/automatico" = {
-          exec = "sh -c '$HOME/.config/hypr/Scripts/WallPaper.zsh'";
-          interval = 600;
-        };
+
+        # On screen thingy
         cava = {
           framerate = 240;
           autosens = 1;
@@ -62,133 +68,163 @@
           input_delay = 0;
           format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
         };
-        "custom/keybinds" = {
-          format = "{icon} KB";
-          format-icons = ["󰘳"];
-          on-click = "bash ~/Documents/themes/keybinds/keybinds.sh";
-        };
-        backlight = {
-          device = "intel_backlight";
-          format = "{icon}  {percent}%";
-          format-icons = ["" ""];
-        };
-        battery = {
-          bat = "BAT0";
-          interval = 60;
-          states = {
-            warning = 30;
-            critical = 15;
-          };
-          format = "{icon}  {capacity}%";
-          format-icons = ["" "" "" "" ""];
-          max-length = 25;
-        };
-        keyboard-state = {
-          numlock = false;
-          capslock = true;
-          format = "{icon} {name}";
+
+        # Volume Control
+        pulseaudio = {
+          format = "{icon} {volume}%";
+          format-bluetooth = "{icon} {volume}%  {format_source}";
+          format-bluetooth-muted = "{icon} {format_source}";
+          format-muted = " {format_source}";
+          format-source = " {volume}%";
+          format-source-muted = "";
           format-icons = {
-            locked = "";
-            unlocked = "";
+            headphone = "";
+            phone = "";
+            portable = "";
+            car = "";
+            default = [
+              ""
+              ""
+              ""
+            ];
           };
+          on-click = "pavucontrol";
         };
-        tray = {
-          icon-size = 18;
-          spacing = 10;
+
+        # Network
+        network = {
+	    format = "{icon}";
+            format-wifi = "{icon} {essid}";
+            format-ethernet = "{icon} connected";
+            tooltip-format = "{ifname} via {gwaddr}";
+            format-linked = "{icon}{ ifname} (No IP)";
+            format-disconnected = "Disconnected ⚠";
+
+	    format-icons = {
+	      wifi = "󰖩";
+	      ethernet = "󰈁";
+	      linked = "󰈂";
+	    };
+            # on-click = "sh ~/scripts/rofi-wifi-menu/rofi-wifi-menu.sh";
         };
-        disk = {
-          interval = 30;
-          format = "  {percentage_used}%";
-          path = "/";
-        };
-        privacy = {
-          icon-spacing = 10;
-          icon-size = 18;
-          transition-duration = 250;
-          tooltip = false;
-          modules = [
-            {
-              type = "screenshare";
-              tooltip = true;
-              tooltip-icon-size = 24;
-            }
-            {
-              type = "audio-out";
-              tooltip = true;
-              tooltip-icon-size = 24;
-            }
-            {
-              type = "audio-in";
-              tooltip = true;
-              tooltip-icon-size = 24;
-            }
-          ];
-        };
-        "hyprland/language" = {
-          format = "  {1}";
-          tooltip = false;
-        };
+
+        # Cpu
         cpu = {
-          interval = 15;
-          format = "  {}%";
-          max-length = 10;
+            format = " {usage}%";
+            tooltip = true;
         };
-        memory = {
-          interval = 30;
-          format = "  {}%";
-          max-length = 10;
+
+        # Memory
+	    memory = {
+          format = " {}%";
+          tooltip = true;
         };
-        "custom/launcher" = {
-          format = " ";
-          on-click = "rofi -show drun";
-          on-click-right = "killall rofi";
-          tooltip = false;
+
+        # Temperature
+        temperature = {
+            interval = 10;
+            critical-threshold = 100;
+            format-critical = " {temperatureC}";
+            format = " {temperatureC}°C";
         };
-        "custom/power" = {
-          format = "⏻ ";
-          tooltip = false;
-          on-click = "bash ~/.config/rofi/powermenu.sh";
-          on-click-right = "killall rofi";
-        };
-        clock = {
-          format = "{:%H:%M}";
-	        format-alt = "{:%d/%m/%Y}";
-	        tooltip-format = "<tt><small>{calendar}</small></tt>";
-          calendar = {
-            mode = "year";
-            mode-mon-col = 3;
-            weeks-pos = "right";
-            on-scroll = 1;
-            format = {
-              months = "<span color='#ffead3'><b>{}</b></span>";
-              days = "<span color='#ecc6d9'><b>{}</b></span>";
-              weeks = "<span color='#99ffdd'><b>W{}</b></span>";
-              weekdays = "<span color='#ffcc66'><b>{}</b></span>";
-              today = "<span color='#ff6699'><b><u>{}</u></b></span>";
+
+        # Battery
+        battery = {
+            states = {
+                warning = 30;
+                critical = 15;
             };
-          };
-          actions = {
-            on-click-right = "mode";
-            on-scroll-up = "shift_up";
-            on-scroll-down = "shift_down";
-          };
+            format = "{icon} {capacity}%";
+            format-full = "{icon} {capacity}%";
+            format-charging = " {capacity}%";
+            format-plugged = " {capacity}%";
+            format-alt = "{time} {icon}";
+            format-icons = [
+                ""
+                ""
+                ""
+                ""
+                ""
+            ];
         };
-        "hyprland/workspaces" = {
-          format = "{icon}";
-          tooltip = false;
-          format-icons = {
-            "1" = " 󰞷 ";
-            "2" = "  ";
-            "3" = "  ";
-            "4" = " 󰍹 ";
-            "5" = " 󰍹 ";
-          };
-          on-click = "activate";
-          persistent-workspaces = {
-            "*" = 3;
-          };
+
+        # Clock
+        clock = {
+            format = "{:%H:%M}";
+            tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
+            format-alt = "{:%Y-%m-%d}";
         };
+      };
+    };
+
+    style = ''
+      * {
+        font-family: "FiraCode Nerd Font Mono";
+        font-weight: bold;
+        font-size: 14px;
+	color: #e0def4;
       }
-    ];
+
+      window#waybar {
+        background: rgba(24, 23, 37, 0.8);
+        border: none;
+      }
+
+      #workspaces button {
+        padding: 0 5px;
+        border: none;
+        background-color: transparent;
+	color: #e0def4
+      }
+
+      #workspaces button.active {
+        color: #9ccfd8; /*cyan */
+      }
+
+      #workspaces button:hover {
+        background: rgba(255, 255, 255, 0.5);
+      }
+
+      #hyprland-window {
+        font-weight: bold;
+        color: #f6c177;
+      }
+
+      #custom-nixos {
+        font-size: 18px;
+        padding-left: 10px;
+      }
+
+      #cava {
+        font-family: monospace;
+        color: #eb6f92;
+      }
+      #clock,
+      #battery,
+      #cpu,
+      #memory,
+      #disk,
+      #temperature,
+      #backlight,
+      #network,
+      #pulseaudio,
+      #tray {
+        padding: 0 8px;
+      }
+
+      #clock:hover,
+      #battery:hover,
+      #cpu:hover,
+      #memory:hover,
+      #disk:hover,
+      #temperature:hover,
+      #backlight:hover,
+      #network:hover,
+      #pulseaudio:hover,
+      #tray:hover {
+        background: rgba(26, 27, 38, 0.9);
+      }
+    '';
   };
 }
+
