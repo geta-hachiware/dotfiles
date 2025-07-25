@@ -1,10 +1,5 @@
 { config, pkgs, ... }:
 
-let
-  terminal = "ghostty";
-  filemanager = "dolphin";
-  menu = "rofi -show drun -show-icons";
-in  
 {
   wayland.windowManager.hyprland = {
     enable = true;
@@ -19,14 +14,13 @@ in
 
       #Start
       exec-once = [
-        "~/.config/hypr/start.sh"
+        "${config.home.homeDirectory}/.config/hypr/start.sh"
         "waybar"
       ];
 
       #Env
       env = [
         "XDG_CURRENT_DESKTOP,Hyprland"
-        "XDG_SESSION_DESKTOP,Hyprland"
         "XDG_SESSION_TYPE,wayland"
         "GDK_BACKEND,wayland,x11,*"
         "NIXOS_OZONE_WL,1"
@@ -40,7 +34,6 @@ in
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
         "QT_QPA_PLATFORMTHEME,qt6ct"
         "QT_AUTO_SCREEN_SCALE_FACTOR,1"
-        "WLR_RENDERER_ALLOW_SOFTWARE,1"
         "NIXPKGS_ALLOW_UNFREE,1"
       ];
 
@@ -90,6 +83,9 @@ in
         };
       };
 
+      workspace = [
+        "1, monitor:DP-1, default:true"
+      ];
 
       #decoration
       decoration = {
@@ -97,10 +93,7 @@ in
         rounding_power = 2;
         
         windowrule = [
-          "opacity 1.0 override 0.85 override 1 override, title:.*youtube.*"
-          "opacity 1.0 override 0.85 override 1 override, title:.*Crunchyroll.*"
-          "opacity 1.0 override 0.85 override 1 override, title:.*Netflix.*"
-          "opacity 1.0 override 0.85 override 1 override, title:.*Max.*"
+          "opacity 1.0 override 0.85 override 1 override, title:^(YouTube|Netflix|Crunchyroll|Max)"
           "suppressevent maximize, class:.*"
           "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
         ];
@@ -108,12 +101,13 @@ in
           "idleinhibit fullscreen, class:.*"
         ];
 
+
         active_opacity = 0.90;
         inactive_opacity = 0.85;
         
         shadow = {
           enabled = true;
-          range = 20;
+          range = 12;
           render_power = 2;
           color = "rgba(393552dd)";
         };
@@ -122,8 +116,8 @@ in
           enabled = true;
 	  xray = true;
           size = 4;
-          passes = 3;
-          vibrancy = 0.1696;
+          passes = 1;
+          vibrancy = 0.10;
 	  new_optimizations = true;
 	  popups = true;
 	  popups_ignorealpha = 0.6;
@@ -197,12 +191,12 @@ in
 
       #Binds
       bind = [
-        "$mainMod, Return, exec, ${terminal}"
+        "$mainMod, Return, exec, ghostty"
         "$mainMod, Q, killactive"
         "$mainMod, M, exit"
-        "SUPER, E, exec, ${filemanager}"
+        "SUPER, E, exec, dolphin"
         "SUPER, V, togglefloating"
-        "SUPER, D, exec, ${menu}"
+        "SUPER, D, exec, rofi -dmenu -show-icons | cliphist list | cliphist decode | wl-copy"
         "SUPER, P, pseudo"
         "SUPER, J, togglesplit"
         "SUPER, F, fullscreen"
