@@ -113,8 +113,8 @@ in
         
         shadow = {
           enabled = true;
-          range = 9;
-          render_power = 4;
+          range = 20;
+          render_power = 2;
           color = "rgba(393552dd)";
         };
 
@@ -183,8 +183,6 @@ in
         force_default_wallpaper = -1;
         disable_hyprland_logo = false;
       };
-
-
 
       #Gestos
       gestures = {

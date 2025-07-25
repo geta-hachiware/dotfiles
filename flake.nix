@@ -11,12 +11,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    stylix = {
-      url = "github:nix-community/stylix";
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-
-      # Textfox
-    textfox.url = "github:adriankarlen/textfox";
   };
 
   outputs =
@@ -24,7 +22,7 @@
       self,
       nixpkgs,
       home-manager,
-      stylix,
+      spicetify-nix,
       ...
       }@inputs:
     let
@@ -40,13 +38,14 @@
           inherit system;
           modules = [
             ./nixos/configuration.nix
-            stylix.nixosModules.stylix
+            inputs.spicetify-nix.nixosModules.default
           ];
         };
       };
       homeConfigurations = {
         hachi = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
+	  extraSpecialArgs = { inherit inputs; };
           modules = [
           ./home-manager/home.nix
           ];
