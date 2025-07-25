@@ -57,7 +57,7 @@
           bars = 6;
           lower_cutoff_freq = 20;
           higher_cutoff_freq = 22000;
-          method = "pulse";
+          method = "pipewire";
           source = "auto";
           stereo = false;
           reverse = false;

@@ -32,20 +32,24 @@
     hyprshot
     brightnessctl
     wl-clipboard
-    pulseaudio
     feh
     libreoffice-qt6-fresh
     imagemagick
     xdg-desktop-portal
     xdg-desktop-portal-wlr
+    nerd-fonts.fira-code
+    protonup-qt
   ];
 
+  fonts.fontconfig.enable = true;
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
   };
 
   home.sessionVariables = {
+    GTK_THEM = "rose-pine-moon";
+    XCURSOR_THEME = "Bibata-Modern-Classic";
     # EDITOR = "emacs";
   };
 

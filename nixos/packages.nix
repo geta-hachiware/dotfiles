@@ -19,19 +19,19 @@
     lutris
     bottles
     heroic
+    gamescope
+    steam-run
+    kdePackages.xwaylandvideobridge
 
     # CLI utils
     wget
     git
     vim
-    fastfetch
 
     # GUI utils
     mako
 
     # Sound
-    pipewire
-    pulseaudio
-    pamixer
+    pamixer 
   ];
 }
