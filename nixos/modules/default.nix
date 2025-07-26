@@ -8,6 +8,7 @@
     ./config/nvidia.nix
     ./config/xserver.nix
     ./config/locale.nix
+    ./programs/steam.nix
     ./fonts.nix
   ];
 }
