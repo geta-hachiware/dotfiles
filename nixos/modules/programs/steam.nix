@@ -1,5 +1,4 @@
-{ config, pkgs, ...}:
-
+{ pkgs, ... }: 
 {
   # Steam
   programs = {
@@ -14,6 +13,6 @@
 
   environment.sessionVariables = {
     STEAM_EXTRA_COMPAT_TOOLS_PATHS =
-      "\${HOME}/.steam/root/compatibilitytools.d";
+      "/home/hachi/.steam/root/compatibilitytools.d";
   };
 }

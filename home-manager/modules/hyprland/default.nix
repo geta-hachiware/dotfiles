@@ -12,7 +12,7 @@
 
       #Start
       exec-once = [
-        "~/.config/hypr/start.sh &"
+        "${config.home.homeDirectory}/.config/hypr/start.sh "
         "waybar"
       ];
 

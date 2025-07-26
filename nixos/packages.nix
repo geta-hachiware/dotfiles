@@ -2,7 +2,7 @@
   nixpkgs.config = {
     allowUnfree = true;
   };
-  
+
   # Flatpak
   services.flatpak.enable = true;
 
@@ -19,7 +19,6 @@
     lutris
     bottles
     heroic
-    gamescope
     steam-run
     kdePackages.xwaylandvideobridge
 
