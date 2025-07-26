@@ -15,6 +15,7 @@
 
     # Gaming
     mangohud
+    protonup-qt
     protonup
     lutris
     bottles
