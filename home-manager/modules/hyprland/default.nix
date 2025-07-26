@@ -4,9 +4,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
-
-      "$mainMod" = "SUPER";
-      
+ 
       #Monitor
       monitor = [ 
       "DP-1,1920x1080@144,0x0,1"
@@ -14,26 +12,31 @@
 
       #Start
       exec-once = [
-        "~/.config/hypr/start.sh"
+        "~/.config/hypr/start.sh &"
         "waybar"
       ];
 
       #Env
       env = [
+        # Hyprland + Wayland
         "XDG_CURRENT_DESKTOP,Hyprland"
         "XDG_SESSION_TYPE,wayland"
         "GDK_BACKEND,wayland,x11,*"
+        # Electron / Discord / Browsers
         "NIXOS_OZONE_WL,1"
         "ELECTRON_OZONE_PLATFORM_HINT,auto"
         "MOZ_ENABLE_WAYLAND,1"
-        "OZONE_PLATFORM,wayland"
-        "EGL_PLATFORM,wayland"
-        "CLUTTER_BACKEND,wayland"
+
+	# SDL for games/emulators
         "SDL_VIDEODRIVER,wayland"
+
+	# QT apps
         "QT_QPA_PLATFORM,wayland;xcb"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
         "QT_QPA_PLATFORMTHEME,qt6ct"
         "QT_AUTO_SCREEN_SCALE_FACTOR,1"
+
+	# Licensing
         "NIXPKGS_ALLOW_UNFREE,1"
       ];
 
@@ -43,7 +46,7 @@
         gaps_out = 6;
         border_size = 2;
 
-        #Bordes Eva-01 style
+        #Borders
         "col.active_border" = "rgba(c4a7e7ff) rgba(f6c177ff) 45deg";
         "col.inactive_border" = "rgba(393552dd)";
 
@@ -189,81 +192,122 @@
         sensitivity = -0.5;
       };
 
+      "$mainMod" = "SUPER";
+
       #Binds
       bind = [
+        # Terminal $ App Launcher
+	"$mainMod, D, exec, rofi -show drun -show-icons"
         "$mainMod, Return, exec, ghostty"
+
+        # File Manager
+	"$mainMod, E, exec, dolphin"
+
+        # Toggle focused window split
+        "$mainMod, slash, togglesplit"
+
+        # Scroll through existing workspaces
+        "$mainMod, mouse_down, workspace, e+1"
+        "$mainMod, mouse_up, workspace, e-1"   
+
+	# Window Management
         "$mainMod, Q, killactive"
         "$mainMod, M, exit"
-        "SUPER, E, exec, dolphin"
-        "SUPER, V, togglefloating"
-        "SUPER, D, exec, rofi -show drun -show-icons"
-        "SUPER, P, pseudo"
-        "SUPER, J, togglesplit"
-        "SUPER, F, fullscreen"
+        "$mainMod, V, togglefloating"
+        "$mainMod, P, pseudo"
+        "$mainMod, F, fullscreen"
 
-        # Move focus with mainMod + arrow keys
-        "SUPER, left, movefocus, l"
-        "SUPER, right, movefocus, r"
-        "SUPER, up, movefocus, u"
-        "SUPER, down, movefocus, d"
+        # Screenshot/Screencapture
+        "$mainMod, P, exec, hyprshot -m region output --clipboard-only --freeze" # partial screenshot capture       
+        "$mainMod+Shift, S, exec, hyprshot -m region output --clipboard-only --freeze" # partial screenshot capture 
 
-        #workspaces
-        "SUPER, 1, workspace, 1"
-        "SUPER, 2, workspace, 2"
-        "SUPER, 3, workspace, 3"
-        "SUPER, 4, workspace, 4"
-        "SUPER, 5, workspace, 5"
-        "SUPER, 6, workspace, 6"
-        "SUPER, 7, workspace, 7"
-        "SUPER, 8, workspace, 8"
-        "SUPER, 9, workspace, 9"
-        "SUPER, 0, workspace, 10"
+        # Move/Change window focus
+        "$mainMod, Left, movefocus, l"  
+        "$mainMod, Right, movefocus, r" 
+        "$mainMod, Up, movefocus, u"    
+        "$mainMod, Down, movefocus, d"  
+        "Alt, Tab, movefocus, d"        
+                                    
+        "$mainMod, H, movefocus, l"     
+        "$mainMod, L, movefocus, r"     
+        "$mainMod, K, movefocus, u"     
+        "$mainMod, J, movefocus, d"     
+        "Alt, Tab, movefocus, d"
 
-        #MoveWindows
-        "SUPER SHIFT, 1, movetoworkspace, 1"
-        "SUPER SHIFT, 2, movetoworkspace, 2"
-        "SUPER SHIFT, 3, movetoworkspace, 3"
-        "SUPER SHIFT, 4, movetoworkspace, 4"
-        "SUPER SHIFT, 5, movetoworkspace, 5"
-        "SUPER SHIFT, 6, movetoworkspace, 6"
-        "SUPER SHIFT, 7, movetoworkspace, 7"
-        "SUPER SHIFT, 8, movetoworkspace, 8"
-        "SUPER SHIFT, 9, movetoworkspace, 9"
-        "SUPER SHIFT, 0, movetoworkspace, 10"
+        # Switch workspaces
+        "$mainMod, 1, workspace, 1"
+        "$mainMod, 2, workspace, 2"
+        "$mainMod, 3, workspace, 3"
+        "$mainMod, 4, workspace, 4"
+        "$mainMod, 5, workspace, 5"
+        "$mainMod, 6, workspace, 6"
+        "$mainMod, 7, workspace, 7"
+        "$mainMod, 8, workspace, 8"
+        "$mainMod, 9, workspace, 9"
+        "$mainMod, 0, workspace, 10"
 
-        #ScreenShot
-        "SUPER, S, exec, hyprshot -m region"
-        "SUPER SHIFT, S, exec, hyprshot -m region"
+        # Switch workspaces to a relative workspace
+        "$mainMod+Ctrl, Down, workspace, r+1" #Vertical Workspaces
+        "$mainMod+Ctrl, Up, workspace, r-1"
+        "$mainMod+Ctrl, Right, workspace, r+1" #Horizontal Workspaces
+        "$mainMod+Ctrl, Left, workspace, r-1"
 
-        #Scroll workspaces
-        "SUPER, mouse_down, workspace, e+1"
-        "SUPER, mouse_up, workspace, e-1"
-      ];
+        "$mainMod+Ctrl, j, workspace, r+1" #Vertical Workspaces
+        "$mainMod+Ctrl, k, workspace, r-1"
+        "$mainMod+Ctrl, l, workspace, r+1" #Horizontal Workspaces
+        "$mainMod+Ctrl, h, workspace, r-1"
 
-      #MouseBind
-      bindm = [
-        #Rezise
-        "SUPER, mouse:272, movewindow"
-        "SUPER, mouse:273, resizewindow"
-      ];
+        # Move focused window to a workspace
+        "$mainMod+Shift, 1, movetoworkspace, 1"
+        "$mainMod+Shift, 2, movetoworkspace, 2"
+        "$mainMod+Shift, 3, movetoworkspace, 3"
+        "$mainMod+Shift, 4, movetoworkspace, 4"
+        "$mainMod+Shift, 5, movetoworkspace, 5"
+        "$mainMod+Shift, 6, movetoworkspace, 6"
+        "$mainMod+Shift, 7, movetoworkspace, 7"
+        "$mainMod+Shift, 8, movetoworkspace, 8"
+        "$mainMod+Shift, 9, movetoworkspace, 9"
+        "$mainMod+Shift, 0, movetoworkspace, 10"
 
-      #EspecialKey
-      bindel = [
-        ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-        ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
-        ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-        ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-        ",XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+"
-        ",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
-      ];
+	# Move focused window to a workspace silently
+        "$mainMod+Alt, 1, movetoworkspacesilent, 1"
+        "$mainMod+Alt, 2, movetoworkspacesilent, 2"
+        "$mainMod+Alt, 3, movetoworkspacesilent, 3"
+        "$mainMod+Alt, 4, movetoworkspacesilent, 4"
+        "$mainMod+Alt, 5, movetoworkspacesilent, 5"
+        "$mainMod+Alt, 6, movetoworkspacesilent, 6"
+        "$mainMod+Alt, 7, movetoworkspacesilent, 7"
+        "$mainMod+Alt, 8, movetoworkspacesilent, 8"
+        "$mainMod+Alt, 9, movetoworkspacesilent, 9"
+        "$mainMod+Alt, 0, movetoworkspacesilent, 10"
+       ];
 
-      #Multimedia
-      bindl = [
-        ", XF86AudioNext, exec, playerctl next"
-        ", XF86AudioPause, exec, playerctl play-pause"
-        ", XF86AudioPlay, exec, playerctl play-pause"
-        ", XF86AudioPrev, exec, playerctl previous"
-      ];
+       bindm = [
+       # Move/Resize focused window
+         "$mainMod, mouse:272, movewindow"   
+	 "$mainMod, mouse:273, resizewindow" 
+	 "$mainMod, Z, movewindow"           
+	 "$mainMod, X, resizewindow"
+       ];
+
+       #SpecialKey
+       bindel = [
+       # Laptop multimedia keys for volume and LCD brightness
+         ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 2%+"
+         ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%-"
+         ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+         ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"                    ",XF86MonBrightnessUp, exec, brightnessctl s 10%+"
+         ",XF86MonBrightnessDown, exec, brightnessctl s 10%-"
+       ];
+
+       #Multimedia
+       bindl = [
+       # Requires playerctl
+         ", XF86AudioNext, exec, playerctl next"
+         ", XF86AudioPause, exec, playerctl play-pause"
+         ", XF86AudioPlay, exec, playerctl play-pause"
+         ", XF86AudioPrev, exec, playerctl previous"
+       ];
     };
   };
 }

@@ -8,17 +8,14 @@
 
     initrd = {
       availableKernelModules = [ "nvidia" "nvme" "xhci_pci" "usbhid" "sd_mod" ];
-      kernelModules = [ "nvidia" ];
+      kernelModules = [ "nvidia" "kvm-intel" ];
     };
 
     kernelParams = [
       "nvidia-drm.modeset=1"
-      "nvidia_drm.fbdev=1"
       "quiet"
       "loglevel=3"
     ];
-
-    kernelModules = [ "kvm-intel" ];
 
     kernel.sysctl = {
       "vm.swappiness" = 10;
