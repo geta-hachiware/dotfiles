@@ -8,12 +8,11 @@
 
     initrd = {
       availableKernelModules = [ "nvidia" "nvme" "xhci_pci" "usbhid" "sd_mod" ];
-      kernelModules = [ "nvidia" "kvm-intel" ];
+      kernelModules = [ "nvidia" ];
     };
 
     kernelParams = [
       "nvidia-drm.modeset=1"
-      "quiet"
       "loglevel=3"
     ];
 

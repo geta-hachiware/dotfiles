@@ -20,7 +20,6 @@
     lutris
     bottles
     heroic
-    steam-run
     kdePackages.xwaylandvideobridge
 
     # CLI utils
